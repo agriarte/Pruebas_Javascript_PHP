@@ -1,5 +1,4 @@
-//prueba de crear cookies en archivo php llamado por ajax
-<!-- https://www.cablenaranja.com/ajax-sencillo-con-php-y-jquery/ -->
+//prueba de creación de cokies en javascript y lectura en otra pagina
 
 <!doctype html>
 <html>
@@ -11,7 +10,6 @@
         crossorigin="anonymous"></script>
     </head>
     <body>
-        <h1>Enviando datos de forma asíncrona con AJAX</h1>
         <p>Por favor, introduce los siguientes datos</p>
         <form>
             <p><label>¿Cuál es tu nombre?</label> <input type="text" id="txtNombre" required /></p>
@@ -32,34 +30,33 @@
             $(function () {
                 $("#btnOk").click(function (evt) {
                     evt.preventDefault();
-
                     var nombre = $("#txtNombre").val();
                     var correo = $("#txtCorreo").val();
                     var opcion = $("#cmbMedio").val();
                     var peticion = false;
                     if ($("#chkPeticion").prop("checked"))
                         peticion = true;
-                    $.ajax({
-                        url: "datos.php",
-                        method: "POST",
-                        data: {nom: nombre, cor: correo, opc: opcion, pet: peticion},
-                        success: function (dataresponse, statustext, response) {
-                            var mensaje = "";
-                            if (dataresponse == "ok") {
-                                mensaje = "Gracias por sus datos.";
-
-                            } else {
-                                mensaje = "Faltan algunos datos, revise por favor." + dataresponse;
-                            }
-                            $("#respuesta").html("<p><strong>" + mensaje + "</strong></p>");
-                        },
-                        error: function (request, errorcode, errortext) {
-                            $("#respuesta").html("<p>Ocurrió el siguiente error: <strong>" + errortext + "</strong></p>");
-                        }
-                    });
-                    window.location.href = "recogerPost.php";
+                    if (nombre == "" && correo == "") {
+                        mensaje = "Faltan algunos datos, revise por favor.";
+                        $("#respuesta").html("<p><strong>" + mensaje + "</strong></p>");
+                    } else
+                    {
+                        
+                        mensaje = "datos ok";
+                        $("#respuesta").html("<p><strong>" + mensaje + "</strong></p>");
+                        
+                        //todo crear cookies
+                        // ir a otra pagina y recoger cookies
+                        document.cookie = "nomC=" + encodeURIComponent( nombre );
+                        document.cookie = "corC=" + encodeURIComponent( correo );
+                        document.cookie = "opcC=" + encodeURIComponent( opcion );
+                        document.cookie = "petC=" + encodeURIComponent( peticion );
+                        window.location.href = "recogerPost.php";
+                    }
                 });
             });
+
+
         </script>
     </body>
 </html>
