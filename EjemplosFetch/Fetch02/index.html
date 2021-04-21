@@ -1,0 +1,44 @@
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Ejemplo básico de Fetch</div>
+        <p id="demo">Cambiar este texto con Fetch</p>
+
+        <script>
+            //response solo se puede capturar una vez o dará error "body has already been consumed"
+
+            let data = new FormData();
+            data.append('a', 5);
+            data.append('b', 7);
+
+            fetch('servidor.php', {
+                method: 'POST',
+                body: data
+            })
+                    .then(function (response) {
+                        if (response.ok) {
+                            //response solo se puede capturar una vez o dará error "body has already been consumed"
+                            txt = response.text();
+                            console.log(txt);
+                            //el return viaja al siguiente .then
+                            return txt;
+                        } else {
+                            throw "Error en la llamada";
+                        }
+                    })
+                    .then(function (texto) {
+                        console.log(texto);
+                        document.getElementById("demo").innerHTML = texto;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+
+        </script>
+    </body>
+</html>

@@ -90,6 +90,8 @@ and open the template in the editor.
 
                                 console.log(result);
                                 console.log(reader);
+                                console.log(img.name);
+                                 console.log(result.name);
                             }
                         },
                     });
@@ -102,10 +104,11 @@ and open the template in the editor.
         if (isset($_POST['cargarImagen'])) {
             if (!empty($_POST['imagen-copia'])) {
                 file_put_contents('images/foto2.jpg', file_get_contents($_POST['imagen-copia']));
+                print_r($_REQUEST);
+               
                 echo "<br>";
-                echo "POST imagen-copia " . $_POST['imagen-copia'];
-                echo "<br>";
-                echo "POST texto-nombre " . $_POST['texto-nombre'];
+                echo "POST imagen-copia " . $_POST['imagen-copia']['name'];
+                
             }
         }
         ?>
